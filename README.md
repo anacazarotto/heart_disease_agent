@@ -145,19 +145,19 @@ O agente usa a API do **Gemini** (`gemini-2.0-flash`) com um *system prompt* que
 ---
 
 ## 📓 Diário de Bordo de Contribuições
-
-> Cada integrante deve preencher esta seção descrevendo o que fez ao longo dos 15 dias do projeto.
-
+ 
+> Ajustar datas conforme o cronograma real de cada uma.
+ 
 ### Vanessa
-- Dia 1-2: _(preencher)_
-- Dia 3-5: _(preencher)_
-- ...
-
+- Revisei a base e os gráficos do Seaborn do trabalho anterior, e implementei o Naive Bayes.
+- Rodei o GridSearch no KNN e no MLP de novo pra comparar tudo nas mesmas condições.
+- Montei a tabela comparativa das métricas e escrevi a análise crítica dos quatro algoritmos.
+- Ajustes finais no notebook e exportação do modelo (Naive Bayes foi o que saiu na frente).
 ### Ana
-- Dia 1-2: _(preencher)_
-- Dia 3-5: _(preencher)_
-- ...
-
+- Criei a chave do Gemini e montei o backend em FastAPI com a validação dos dados de entrada.
+- Integrei o modelo exportado com o endpoint de predição e comecei a escrever o prompt do agente.
+- Resolvi uns perrengues com a API do Gemini (modelo tinha sido descontinuado, resposta vinha cortada) e fechei o frontend em Streamlit.
+- Testes ponta a ponta, README e organização do repositório no GitHub.
 ---
 
 ## ⚠️ Aviso
