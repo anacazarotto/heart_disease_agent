@@ -146,8 +146,6 @@ O agente usa a API do **Gemini** (`gemini-2.0-flash`) com um *system prompt* que
 
 ## 📓 Diário de Bordo de Contribuições
  
-> Ajustar datas conforme o cronograma real de cada uma.
- 
 ### Vanessa
 - Revisei a base e os gráficos do Seaborn do trabalho anterior, e implementei o Naive Bayes.
 - Rodei o GridSearch no KNN e no MLP de novo pra comparar tudo nas mesmas condições.
