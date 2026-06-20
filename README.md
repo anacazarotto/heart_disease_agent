@@ -4,7 +4,7 @@ Projeto que une **Machine Learning** e **Inteligência Artificial Generativa** p
 risco de doença cardíaca a partir de exames clínicos, e explicar o resultado em linguagem
 natural através de um agente de IA (Gemini).
 
-> **Integrantes:** Vanessa e Ana
+> **Integrantes:** Ana Carla Londero Cazarotto e Vanessa da Silva
 > **Dataset:** [Heart Disease (Kaggle/UCI)](https://www.kaggle.com/datasets/johnsmith88/heart-disease-dataset)
 
 ---
