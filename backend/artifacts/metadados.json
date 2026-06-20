@@ -1,0 +1,59 @@
+{
+  "modelo_escolhido": "Naive Bayes (Gaussian)",
+  "colunas_entrada": [
+    "age",
+    "sex",
+    "cp",
+    "trestbps",
+    "chol",
+    "fbs",
+    "restecg",
+    "thalach",
+    "exang",
+    "oldpeak",
+    "slope",
+    "ca",
+    "thal"
+  ],
+  "metricas_teste": {
+    "acuracia": 0.8197,
+    "sensibilidade": 0.9091,
+    "especificidade": 0.7143,
+    "precisao": 0.7895,
+    "f1": 0.8451
+  },
+  "todas_as_metricas": [
+    {
+      "modelo": "Regressão Logística (C=1)",
+      "acuracia": 0.7869,
+      "sensibilidade": 0.9091,
+      "especificidade": 0.6429,
+      "precisao": 0.75,
+      "f1": 0.8219
+    },
+    {
+      "modelo": "KNN (K=9)",
+      "acuracia": 0.7705,
+      "sensibilidade": 0.8485,
+      "especificidade": 0.6786,
+      "precisao": 0.7568,
+      "f1": 0.8
+    },
+    {
+      "modelo": "MLP (50,) relu",
+      "acuracia": 0.8033,
+      "sensibilidade": 0.8788,
+      "especificidade": 0.7143,
+      "precisao": 0.7838,
+      "f1": 0.8286
+    },
+    {
+      "modelo": "Naive Bayes (Gaussian)",
+      "acuracia": 0.8197,
+      "sensibilidade": 0.9091,
+      "especificidade": 0.7143,
+      "precisao": 0.7895,
+      "f1": 0.8451
+    }
+  ]
+}

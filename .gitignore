@@ -1,0 +1,19 @@
+# Ambientes virtuais
+venv/
+.venv/
+env/
+__pycache__/
+*.pyc
+
+# Variáveis de ambiente (NUNCA commitar a chave de API)
+.env
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Sistema operacional
+.DS_Store
+Thumbs.db
+
+# Streamlit
+.streamlit/secrets.toml

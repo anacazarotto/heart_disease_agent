@@ -1,0 +1,17 @@
+# Dependências consolidadas do projeto (notebook + backend + frontend)
+# Para instalação separada, veja backend/requirements.txt e frontend/requirements.txt
+
+pandas==2.2.3
+numpy==1.26.4
+seaborn==0.13.2
+matplotlib==3.9.2
+scikit-learn==1.5.2
+joblib==1.4.2
+
+fastapi==0.115.6
+uvicorn[standard]==0.32.1
+pydantic==2.10.3
+requests==2.32.3
+python-dotenv==1.0.1
+
+streamlit==1.40.2
