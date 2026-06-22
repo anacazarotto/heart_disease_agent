@@ -5,6 +5,8 @@ Endpoints:
     GET  /                -> health check
     GET  /info             -> metadados do modelo (algoritmo escolhido, métricas)
     POST /predict           -> recebe dados do paciente, retorna predição + explicação da IA
+    GET  /historico         -> últimas predições salvas no banco
+    GET  /historico/{id}    -> detalhes completos de uma predição específica
 
 Para rodar localmente:
     uvicorn main:app --reload --port 8000
@@ -25,6 +27,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from schemas import PacienteInput, PredicaoOutput
 from gemini_agent import gerar_explicacao, GeminiAgentError
+from database import inicializar_banco, salvar_predicao, buscar_historico, buscar_predicao_por_id
 
 load_dotenv()  # carrega GEMINI_API_KEY do arquivo .env, se existir
 
@@ -68,6 +71,9 @@ COLUNAS_ENTRADA = metadados["colunas_entrada"]
 METRICAS_MODELO = metadados["metricas_teste"]
 NOME_MODELO = metadados["modelo_escolhido"]
 
+# Cria a tabela no banco se ainda não existir
+inicializar_banco()
+
 
 @app.get("/")
 def root():
@@ -90,6 +96,7 @@ def predict(paciente: PacienteInput):
     """
     Recebe os dados de um paciente, roda o modelo treinado e pede ao agente
     de IA (Gemini) para explicar o resultado em linguagem natural.
+    Salva automaticamente tudo no banco de dados (histórico).
     """
     dados = paciente.model_dump()
 
@@ -111,11 +118,31 @@ def predict(paciente: PacienteInput):
     try:
         explicacao = gerar_explicacao(dados, resultado, METRICAS_MODELO)
     except GeminiAgentError as e:
-        # A predição (núcleo do produto) continua funcionando mesmo se a IA falhar
         explicacao = (
             "[Explicação por IA indisponível no momento] "
             f"Motivo técnico: {e}. "
             "O resultado bruto do modelo continua válido e está descrito acima."
         )
 
+    # Salva no banco de dados
+    salvar_predicao(dados, resultado, explicacao)
+
     return PredicaoOutput(**resultado, explicacao_ia=explicacao)
+
+
+@app.get("/historico")
+def historico(limite: int = 20):
+    """
+    Retorna as últimas predições salvas.
+    Use ?limite=N para controlar quantas retornar (padrão: 20).
+    """
+    return buscar_historico(limite=limite)
+
+
+@app.get("/historico/{pred_id}")
+def historico_detalhe(pred_id: int):
+    """Retorna todos os dados de uma predição específica pelo ID."""
+    registro = buscar_predicao_por_id(pred_id)
+    if not registro:
+        raise HTTPException(status_code=404, detail=f"Predição #{pred_id} não encontrada.")
+    return registro

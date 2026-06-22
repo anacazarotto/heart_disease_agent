@@ -1,17 +1,16 @@
 """
 Frontend — Agente Preditivo Especialista (Heart Disease)
 
-Interface simples em Streamlit onde o usuário insere os dados clínicos de
-um paciente e visualiza:
+Interface em Streamlit onde o usuário insere os dados clínicos de um paciente e visualiza:
     1. O resultado bruto do modelo (predição + probabilidades)
     2. A explicação em linguagem natural gerada pelo agente de IA (Gemini)
+    3. O histórico das últimas consultas salvas no banco de dados
 
 Para rodar (com o backend já no ar em outra aba do terminal):
     streamlit run app.py
 """
 
 import os
-
 import requests
 import streamlit as st
 
@@ -27,7 +26,7 @@ st.title("🫀 Agente Preditivo Especialista")
 st.caption("Predição de risco de doença cardíaca com Machine Learning + explicação por IA generativa")
 
 # ---------------------------------------------------------------------------
-# Status da API / informações do modelo
+# Sidebar: info do modelo + histórico de consultas
 # ---------------------------------------------------------------------------
 with st.sidebar:
     st.header("ℹ️ Sobre o modelo")
@@ -49,6 +48,26 @@ with st.sidebar:
     except requests.exceptions.RequestException:
         st.error("⚠️ Backend não está respondendo. Rode `uvicorn main:app --reload` na pasta backend/.")
         info = None
+
+    st.divider()
+
+    # Histórico de consultas
+    st.header("🕑 Histórico de consultas")
+    try:
+        historico = requests.get(f"{API_URL}/historico?limite=10", timeout=5).json()
+        if not historico:
+            st.caption("Nenhuma consulta realizada ainda.")
+        else:
+            for reg in historico:
+                icone = "⚠️" if reg["predicao"] == 1 else "✅"
+                prob = reg["probabilidade_com_doenca"] * 100
+                with st.expander(f"{icone} #{reg['id']} — {reg['timestamp']} — {prob:.0f}% risco"):
+                    st.markdown(f"**Idade:** {reg['age']} anos")
+                    st.markdown(f"**Resultado:** {reg['rotulo']}")
+                    st.markdown(f"**Explicação da IA:**")
+                    st.caption(reg["explicacao_ia"])
+    except requests.exceptions.RequestException:
+        st.caption("Histórico indisponível.")
 
     st.divider()
     st.caption(
